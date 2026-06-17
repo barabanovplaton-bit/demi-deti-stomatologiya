@@ -21,19 +21,19 @@ export function useComingSoon() {
 const sectionLabels: Record<string, { title: string; subtitle: string }> = {
   services: {
     title: "Услуги",
-    subtitle: "Полный каталог направлений клиники",
+    subtitle: "Полный каталог направлений клиники с ценами",
   },
   clinics: {
     title: "Филиалы",
-    subtitle: "Шесть адресов в историческом центре Петербурга",
+    subtitle: "Семь адресов в Петербурге с картой и схемой проезда",
   },
   doctors: {
     title: "Врачи",
-    subtitle: "Команда специалистов с многолетним опытом",
+    subtitle: "Команда специалистов с регалиями и опытом",
   },
   reviews: {
     title: "Отзывы",
-    subtitle: "Письма пациентов за тридцать шесть лет",
+    subtitle: "Все 216 отзывов пациентов на 2ГИС",
   },
   contacts: {
     title: "Контакты",
@@ -41,7 +41,7 @@ const sectionLabels: Record<string, { title: string; subtitle: string }> = {
   },
   appointment: {
     title: "Запись на приём",
-    subtitle: "Выберите филиал и удобное время",
+    subtitle: "Выберите филиал, врача и удобное время",
   },
   prices: {
     title: "Цены",
@@ -73,6 +73,16 @@ export function ComingSoonProvider({
     };
   }, [isOpen]);
 
+  // Закрытие по Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen]);
+
   const labels = sectionLabels[section] ?? {
     title: "Раздел",
     subtitle: "Страница в разработке",
@@ -87,80 +97,80 @@ export function ComingSoonProvider({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4"
             onClick={() => setIsOpen(false)}
           >
-            <div className="absolute inset-0 bg-arkadia-ink/85 backdrop-blur-md" />
+            <div className="absolute inset-0 bg-arkadia-graphite/40 backdrop-blur-md" />
 
             <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 20 }}
+              initial={{ scale: 0.95, opacity: 0, y: 12 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 10 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ scale: 0.97, opacity: 0, y: 6 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-md overflow-hidden rounded-sm border border-arkadia-ochre/30 bg-arkadia-graphite p-8 md:p-12 grain-overlay"
+              className="relative w-full max-w-md rounded-2xl border border-arkadia-navy/15 bg-arkadia-paper p-8 md:p-10 shadow-soft-lg"
             >
-              <CornerOrnament className="left-3 top-3" />
-              <CornerOrnament className="right-3 top-3 rotate-90" />
-              <CornerOrnament className="left-3 bottom-3 -rotate-90" />
-              <CornerOrnament className="right-3 bottom-3 rotate-180" />
-
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute right-4 top-4 text-arkadia-bone/60 transition-colors hover:text-arkadia-ochre"
+                className="absolute right-4 top-4 text-arkadia-slate/60 hover:text-arkadia-navy transition-colors p-1.5 rounded-full hover:bg-arkadia-mist/50"
                 aria-label="Закрыть"
               >
                 <X className="h-5 w-5" />
               </button>
 
               <div className="text-center">
-                <p className="font-body text-xs uppercase tracking-[0.3em] text-arkadia-ochre/80">
-                  Раздел готовится
-                </p>
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-arkadia-navy/8 text-arkadia-navy text-xs font-medium">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-arkadia-navy opacity-75 animate-ping" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-arkadia-navy" />
+                  </span>
+                  Готовится к запуску
+                </span>
 
                 <motion.h3
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15, duration: 0.6 }}
-                  className="mt-4 font-display text-3xl md:text-4xl text-arkadia-ivory"
+                  transition={{ delay: 0.1, duration: 0.4 }}
+                  className="mt-5 font-display text-3xl md:text-4xl font-semibold text-arkadia-graphite tracking-tight"
                 >
                   {labels.title}
                 </motion.h3>
 
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="mx-auto mt-5 h-px w-16 origin-center bg-arkadia-ochre/50"
-                />
-
                 <motion.p
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  className="mt-5 font-body text-sm text-arkadia-bone/70 leading-relaxed"
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                  className="mt-3 font-body text-sm text-arkadia-slate leading-relaxed"
                 >
                   {labels.subtitle}
                 </motion.p>
 
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="mx-auto mt-6 h-px w-16 origin-center bg-arkadia-navy/30"
+                />
+
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.8 }}
-                  className="mt-8 font-display italic text-base text-arkadia-ochre/90"
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="mt-6 font-body text-base text-arkadia-graphite/85 leading-relaxed"
                 >
-                  «Эта земля Аркадии ещё не открыта.»
+                  Раздел будет доступен в полном сайте клиники.
+                  Записаться на приём можно по телефону или через форму на этой странице.
                 </motion.p>
 
                 <motion.button
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.85, duration: 0.5 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
                   onClick={() => setIsOpen(false)}
-                  className="mt-8 inline-flex items-center justify-center px-6 py-2.5 font-body text-xs uppercase tracking-[0.25em] text-arkadia-ivory border border-arkadia-ochre/40 hover:bg-arkadia-ochre/10 transition-colors duration-300"
+                  className="mt-7 inline-flex items-center justify-center px-6 py-3 rounded-xl font-body text-sm font-medium text-arkadia-paper bg-arkadia-navy hover:bg-arkadia-navy-dark transition-colors duration-200"
                 >
-                  Вернуться
+                  Понятно
                 </motion.button>
               </div>
             </motion.div>
@@ -168,20 +178,5 @@ export function ComingSoonProvider({
         )}
       </AnimatePresence>
     </ComingSoonContext.Provider>
-  );
-}
-
-function CornerOrnament({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={`absolute h-5 w-5 text-arkadia-ochre/40 ${className}`}
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="0.5"
-    >
-      <path d="M2 2 L8 2 M2 2 L2 8" />
-      <circle cx="2" cy="2" r="1" fill="currentColor" stroke="none" />
-    </svg>
   );
 }

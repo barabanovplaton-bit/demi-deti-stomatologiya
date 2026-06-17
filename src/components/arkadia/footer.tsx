@@ -1,101 +1,116 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const allBranches = [
-  { name: "На Невском", address: "Невский пр., 22–24", phone: "315-34-86" },
-  { name: "На Загородном", address: "Загородный пр., 21", phone: "713-21-43" },
-  { name: "На Ломоносова", address: "ул. Ломоносова, 26", phone: "764-92-66" },
-  { name: "На Васильевском", address: "В.О., ул. Нахимова, 11", phone: "+7 921 778-62-61" },
-  { name: "На Шуваловском", address: "Шуваловский пр., 72", phone: "692-79-51" },
-  { name: "В Рыбацком", address: "Шлиссельбургский пр., 1", phone: "707-45-32" },
-];
+import { Phone, MapPin } from "lucide-react";
+import { branches, clinicStats } from "./clinic-data";
 
 export function Footer() {
   return (
-    <footer className="relative bg-arkadia-ink border-t border-arkadia-ochre/15 pt-16 pb-8 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-5 md:px-10">
-        {/* Верхний блок — лого + цитата + соцсети */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 pb-12 border-b border-arkadia-ochre/10">
+    <footer className="relative bg-arkadia-graphite text-arkadia-paper pt-16 md:pt-20 pb-8 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
+        {/* Верхний блок */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 pb-12 border-b border-arkadia-paper/10">
+          {/* Логотип + слоган */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="flex h-10 w-10 items-center justify-center border border-arkadia-ochre/40">
-                <span className="font-display text-xl text-arkadia-ochre">А</span>
+            <div className="flex items-center gap-2.5 mb-4">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-arkadia-navy text-arkadia-paper font-display text-lg font-semibold">
+                А
               </span>
               <div>
-                <p className="font-display text-lg tracking-wider text-arkadia-ivory">
-                  АРКАДИЯ
+                <p className="font-display text-base font-semibold">
+                  Аркадия
                 </p>
-                <p className="font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-bone/50 mt-0.5">
-                  с 1989 года
+                <p className="font-body text-[10px] text-arkadia-paper/60 mt-0.5">
+                  стоматология · с 1989
                 </p>
               </div>
             </div>
-            <p className="font-display italic text-sm text-arkadia-bone/60 leading-relaxed">
-              «Страна счастливых людей» —<br />
-              не слоган, а перевод названия.
+            <p className="font-body text-sm text-arkadia-paper/70 leading-relaxed">
+              «Аркадия» — страна счастливых людей.
+              <br />
+              Стоматологическая клиника в Петербурге.
             </p>
           </div>
 
+          {/* Телефон */}
           <div>
-            <p className="font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-ochre/70 mb-5">
+            <p className="font-body text-[10px] uppercase tracking-[0.25em] text-arkadia-gold/80 mb-4">
               Единый номер
             </p>
             <a
-              href="tel:+78126034050"
-              className="font-display text-3xl text-arkadia-ivory hover:text-arkadia-ochre transition-colors duration-300"
+              href={`tel:${clinicStats.mainPhone.replace(/[^\d+]/g, "")}`}
+              className="font-display text-3xl font-bold text-arkadia-paper hover:text-arkadia-gold transition-colors"
             >
-              603-40-50
+              {clinicStats.mainPhone}
             </a>
-            <p className="mt-3 font-body text-xs text-arkadia-bone/50">
-              Ежедневно, 9:00 — 21:00
+            <p className="mt-3 font-body text-xs text-arkadia-paper/60">
+              Пн–Сб 10:00–20:00 · Вс 10:00–19:00
             </p>
+            <a
+              href="https://2gis.ru/spb/firm/5348552838510576"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block font-body text-xs text-arkadia-paper/80 hover:text-arkadia-gold transition-colors"
+            >
+              4.9 ★ на 2ГИС · 216 отзывов →
+            </a>
           </div>
 
+          {/* Соцсети + сайт */}
           <div>
-            <p className="font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-ochre/70 mb-5">
-              Социальные сети
+            <p className="font-body text-[10px] uppercase tracking-[0.25em] text-arkadia-gold/80 mb-4">
+              Контакты
             </p>
+            <a
+              href={`https://${clinicStats.website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block font-body text-sm text-arkadia-paper hover:text-arkadia-gold transition-colors mb-2"
+            >
+              {clinicStats.website}
+            </a>
             <a
               href="https://vk.com/aklinika"
               target="_blank"
               rel="noopener noreferrer"
-              className="ink-underline inline-block font-body text-sm text-arkadia-ivory hover:text-arkadia-ochre transition-colors duration-300"
+              className="block font-body text-sm text-arkadia-paper hover:text-arkadia-gold transition-colors"
             >
               ВКонтакте · vk.com/aklinika
             </a>
-            <p className="mt-3 font-body text-xs text-arkadia-bone/50">
-              Новости клиники и отзывы пациентов
-            </p>
           </div>
         </div>
 
         {/* Все филиалы */}
-        <div className="py-12 border-b border-arkadia-ochre/10">
-          <p className="font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-ochre/70 mb-6">
-            Все филиалы
+        <div className="py-10 border-b border-arkadia-paper/10">
+          <p className="font-body text-[10px] uppercase tracking-[0.25em] text-arkadia-gold/80 mb-6">
+            Все филиалы · {branches.length} адресов
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5">
-            {allBranches.map((b, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+            {branches.map((b, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
+                key={b.id}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="flex items-baseline justify-between gap-3 border-b border-arkadia-ochre/5 pb-3"
+                transition={{ duration: 0.4, delay: i * 0.04 }}
+                className="flex items-start justify-between gap-3 pb-3 border-b border-arkadia-paper/8"
               >
-                <div>
-                  <p className="font-display text-sm text-arkadia-ivory">
+                <div className="flex-1">
+                  <p className="font-body text-sm font-medium text-arkadia-paper">
                     {b.name}
                   </p>
-                  <p className="font-body text-xs text-arkadia-bone/55 mt-0.5">
+                  <p className="font-body text-xs text-arkadia-paper/55 mt-0.5 flex items-start gap-1">
+                    <MapPin className="h-3 w-3 mt-0.5 flex-shrink-0" />
                     {b.address}
                   </p>
                 </div>
-                <p className="font-body text-xs text-arkadia-ochre/70 whitespace-nowrap">
+                <a
+                  href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
+                  className="font-body text-xs text-arkadia-gold hover:text-arkadia-paper transition-colors whitespace-nowrap flex items-center gap-1 mt-0.5"
+                >
+                  <Phone className="h-3 w-3" />
                   {b.phone}
-                </p>
+                </a>
               </motion.div>
             ))}
           </div>
@@ -103,18 +118,18 @@ export function Footer() {
 
         {/* Нижний бар */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-body text-xs text-arkadia-bone/40 text-center md:text-left">
+          <p className="font-body text-xs text-arkadia-paper/50 text-center md:text-left">
             © 1989 — {new Date().getFullYear()} · Стоматологическая клиника «Аркадия» ·
             Санкт-Петербург
           </p>
-          <p className="font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-bone/30">
-            Лицензия № ЛО-78-01-009999
+          <p className="font-body text-[10px] uppercase tracking-[0.2em] text-arkadia-paper/35">
+            Лицензия · ЛО-78-01-009999
           </p>
         </div>
 
-        {/* Тонкая подпись разработчика — ненавязчиво */}
-        <div className="mt-8 text-center">
-          <p className="font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-bone/25">
+        {/* Подпись разработчика */}
+        <div className="mt-6 text-center">
+          <p className="font-body text-[10px] uppercase tracking-[0.25em] text-arkadia-paper/25">
             Концепт-сайт · подготовлен как инициативный проект
           </p>
         </div>

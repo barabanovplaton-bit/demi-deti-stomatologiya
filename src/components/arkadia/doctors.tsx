@@ -1,90 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { doctors } from "./clinic-data";
 import { useComingSoon } from "./coming-soon-modal";
-
-const doctors = [
-  {
-    initials: "АП",
-    name: "Анна Петровна",
-    role: "Стоматолог-терапевт",
-    since: "в Аркадии с 2003",
-    quote: "Зуб, который можно спасти, всегда лучше импланта.",
-  },
-  {
-    initials: "МК",
-    name: "Михаил Константинович",
-    role: "Хирург-имплантолог",
-    since: "в Аркадии с 1998",
-    quote: "Хирургия — это не про силу, а про точность.",
-  },
-  {
-    initials: "ЕС",
-    name: "Елена Сергеевна",
-    role: "Ортодонт",
-    since: "в Аркадии с 2007",
-    quote: "Прикус формирует лицо. Это всегда больше, чем зубы.",
-  },
-  {
-    initials: "ДВ",
-    name: "Дмитрий Валерьевич",
-    role: "Стоматолог-ортопед",
-    since: "в Аркадии с 2001",
-    quote: "Хорошая коронка незаметна. И пациенту, и напротив.",
-  },
-  {
-    initials: "ОА",
-    name: "Ольга Александровна",
-    role: "Детский стоматолог",
-    since: "в Аркадии с 2010",
-    quote: "Если ребёнок не испугался в первый визит — я победила.",
-  },
-  {
-    initials: "СН",
-    name: "Сергей Николаевич",
-    role: "Пародонтолог",
-    since: "в Аркадии с 2005",
-    quote: "Десна — фундамент. Без него любой зуб временный.",
-  },
-];
 
 export function Doctors() {
   const { open } = useComingSoon();
 
   return (
-    <section className="relative bg-arkadia-graphite py-24 md:py-36 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-5 md:px-10">
+    <section className="relative bg-arkadia-paper py-20 md:py-32 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Заголовок */}
-        <div className="mb-16 md:mb-20">
-          <motion.p
+        <div className="mb-12 md:mb-16">
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="font-body text-xs uppercase tracking-[0.4em] text-arkadia-ochre/80 mb-6"
+            transition={{ duration: 0.5 }}
+            className="inline-block px-3 py-1 rounded-full bg-arkadia-navy/8 text-arkadia-navy text-xs font-medium mb-4"
           >
-            IV. Лица Аркадии
-          </motion.p>
+            Врачи
+          </motion.span>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-4xl md:text-6xl text-arkadia-ivory leading-[1.05] max-w-4xl text-balance"
+            transition={{ duration: 0.6 }}
+            className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-arkadia-graphite leading-[1.1] tracking-tight max-w-3xl text-balance"
           >
-            Врачи, которым{" "}
-            <span className="italic text-arkadia-ochre">доверяют лица.</span>
+            Команда специалистов
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="mt-6 font-body text-base text-arkadia-bone/65 max-w-2xl leading-relaxed"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-5 font-body text-base md:text-lg text-arkadia-slate max-w-2xl leading-relaxed"
           >
-            Не регалии через запятую, а люди. У каждого — цитата о работе и
-            год, с которого он в клинике. Этого достаточно, чтобы понять,
-            кому открываешь рот.
+            Взрослые и детские стоматологи всех направлений. Терапия,
+            хирургия, ортодонтия, протезирование, имплантация, пародонтология.
           </motion.p>
         </div>
 
@@ -94,59 +48,54 @@ export function Doctors() {
             <motion.button
               key={i}
               onClick={() => open("doctors")}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative text-left p-7 md:p-8 border border-arkadia-ochre/15 bg-arkadia-ink/40 hover:border-arkadia-ochre/40 hover:bg-arkadia-ink/60 transition-all duration-500 overflow-hidden"
+              transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+              className="group text-left rounded-2xl bg-arkadia-cream border border-arkadia-navy/8 p-6 md:p-7 hover:shadow-soft-md hover:-translate-y-0.5 hover:border-arkadia-navy/20 transition-all duration-300"
             >
-              {/* Портрет-плейсхолдер — стилизованная монограмма */}
-              <div className="mb-6 flex items-center gap-4">
-                <div className="relative h-16 w-16 md:h-20 md:w-20 flex items-center justify-center bg-gradient-to-br from-arkadia-stone to-arkadia-ink border border-arkadia-ochre/30 group-hover:border-arkadia-ochre transition-colors duration-500">
-                  <span className="font-display text-2xl md:text-3xl text-arkadia-ochre">
+              {/* Аватар-монограмма */}
+              <div className="mb-5 flex items-center gap-4">
+                <div className="relative h-14 w-14 md:h-16 md:w-16 flex items-center justify-center rounded-2xl bg-gradient-to-br from-arkadia-navy to-arkadia-navy-light text-arkadia-paper">
+                  <span className="font-display text-xl font-semibold">
                     {doc.initials}
                   </span>
-                  {/* Тонкая рамка */}
-                  <div className="absolute inset-1 border border-arkadia-ochre/10 pointer-events-none" />
                 </div>
                 <div>
-                  <h3 className="font-display text-xl md:text-2xl text-arkadia-ivory group-hover:text-arkadia-ochre transition-colors duration-500">
+                  <h3 className="font-display text-lg font-semibold text-arkadia-graphite group-hover:text-arkadia-navy transition-colors">
                     {doc.name}
                   </h3>
-                  <p className="font-body text-xs text-arkadia-bone/60 mt-1">
+                  <p className="font-body text-xs text-arkadia-slate mt-1 leading-tight">
                     {doc.role}
                   </p>
                 </div>
               </div>
 
               {/* Цитата */}
-              <p className="font-display italic text-base md:text-lg text-arkadia-bone/85 leading-snug border-l border-arkadia-ochre/30 pl-4">
+              <p className="font-body text-sm italic text-arkadia-graphite/80 leading-relaxed pl-3 border-l-2 border-arkadia-navy/20">
                 {doc.quote}
               </p>
 
-              <p className="mt-6 font-body text-[10px] uppercase tracking-[0.3em] text-arkadia-ochre/50">
+              <p className="mt-5 font-body text-[11px] uppercase tracking-wider text-arkadia-navy/70 font-medium">
                 {doc.since}
               </p>
-
-              {/* Линия снизу */}
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-arkadia-ochre scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700" />
             </motion.button>
           ))}
         </div>
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-14 text-center"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-10 md:mt-12 text-center"
         >
           <button
             onClick={() => open("doctors")}
-            className="ink-underline font-body text-sm uppercase tracking-[0.25em] text-arkadia-ochre hover:text-arkadia-ivory transition-colors duration-300"
+            className="font-body text-sm font-medium text-arkadia-navy hover:text-arkadia-navy-dark transition-colors"
           >
-            Вся команда врачей
+            Вся команда врачей →
           </button>
         </motion.div>
       </div>

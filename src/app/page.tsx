@@ -7,21 +7,21 @@ import { About } from "@/components/arkadia/about";
 import { Branches } from "@/components/arkadia/branches";
 import { Services } from "@/components/arkadia/services";
 import { Doctors } from "@/components/arkadia/doctors";
-import { Letters } from "@/components/arkadia/letters";
+import { Reviews } from "@/components/arkadia/reviews";
 import { Contact } from "@/components/arkadia/contact";
 import { Footer } from "@/components/arkadia/footer";
 
 export default function Home() {
   return (
     <ComingSoonProvider>
-      <main className="relative min-h-screen bg-arkadia-ink text-arkadia-ivory overflow-x-hidden">
+      <main className="relative min-h-screen bg-arkadia-cream text-arkadia-graphite overflow-x-hidden">
         <Navigation />
         <Hero />
         <About />
         <Branches />
         <Services />
         <Doctors />
-        <Letters />
+        <Reviews />
         <Contact />
         <Footer />
       </main>

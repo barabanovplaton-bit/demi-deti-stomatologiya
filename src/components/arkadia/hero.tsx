@@ -1,171 +1,197 @@
 "use client";
 
-import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion } from "framer-motion";
+import { Phone, ChevronDown, Star } from "lucide-react";
+import { clinicStats } from "./clinic-data";
 
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  // Параллакс при скролле
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  // Параллакс при движении мыши
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-  const bgTranslateX = useTransform(smoothX, [-0.5, 0.5], [-15, 15]);
-  const bgTranslateY = useTransform(smoothY, [-0.5, 0.5], [-10, 10]);
-  const textTranslateX = useTransform(smoothX, [-0.5, 0.5], [8, -8]);
-  const textTranslateY = useTransform(smoothY, [-0.5, 0.5], [5, -5]);
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const title = "АРКАДИЯ";
+  const title = "Аркадия";
 
   const scrollToNext = () => {
     const el = document.getElementById("about");
-    el?.scrollIntoView({ behavior: "smooth" });
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <section
-      ref={ref}
-      onMouseMove={onMouseMove}
-      className="relative h-screen min-h-[640px] w-full overflow-hidden bg-arkadia-ink"
-    >
-      {/* Фоновое изображение с параллаксом */}
-      <motion.div
-        style={{ y: bgY, scale: bgScale, x: bgTranslateX, translateY: bgTranslateY }}
-        className="absolute inset-0"
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center animate-slow-zoom"
-          style={{
-            backgroundImage: "url(/arkadia/hero-facade.png)",
-            filter: "brightness(0.45) contrast(1.1) saturate(0.7)",
-          }}
-        />
-        {/* Затемнение снизу и по краям */}
-        <div className="absolute inset-0 bg-gradient-to-t from-arkadia-ink via-arkadia-ink/40 to-arkadia-ink/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-arkadia-ink/60 via-transparent to-arkadia-ink/60" />
-      </motion.div>
-
-      {/* Зернистая текстура */}
-      <div className="grain-overlay absolute inset-0 pointer-events-none" />
-
-      {/* Содержимое */}
-      <motion.div
-        style={{ y: contentY, opacity: contentOpacity, x: textTranslateX, translateY: textTranslateY }}
-        className="relative z-10 flex h-full flex-col items-center justify-center px-5 text-center"
-      >
-        {/* Маленькая метка сверху */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="mb-8 flex items-center gap-4"
-        >
-          <span className="h-px w-12 bg-arkadia-ochre/60" />
-          <span className="font-body text-[11px] uppercase tracking-[0.4em] text-arkadia-ochre/90">
-            Стоматологическая клиника
-          </span>
-          <span className="h-px w-12 bg-arkadia-ochre/60" />
-        </motion.div>
-
-        {/* Главное название — буква за буквой */}
-        <h1 className="font-display font-medium text-arkadia-ivory text-[18vw] leading-[0.9] md:text-[12vw] lg:text-[180px] tracking-[0.05em] gold-glow">
-          {title.split("").map((letter, i) => (
-            <span
-              key={i}
-              className="animate-letter inline-block"
-              style={{ animationDelay: `${0.8 + i * 0.1}s` }}
-            >
-              {letter}
-            </span>
-          ))}
-        </h1>
-
-        {/* Подзаголовок */}
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.8 }}
-          className="mt-6 font-display italic text-xl md:text-2xl text-arkadia-ochre/95 text-balance"
-        >
-          Страна счастливых людей
-        </motion.p>
-
-        {/* Линия */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.2, delay: 2.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 h-px w-24 origin-center bg-arkadia-ochre/40"
-        />
-
-        {/* Подпись */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 2.6 }}
-          className="mt-6 font-body text-xs md:text-sm uppercase tracking-[0.3em] text-arkadia-bone/70"
-        >
-          Санкт-Петербург · с 1989 года · шесть филиалов
-        </motion.p>
-
-        {/* Кнопка «Войти» */}
-        <motion.button
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 3 }}
-          onClick={scrollToNext}
-          className="group mt-14 inline-flex flex-col items-center gap-3"
-        >
-          <span className="font-body text-[11px] uppercase tracking-[0.35em] text-arkadia-ivory/85 group-hover:text-arkadia-ochre transition-colors duration-500">
-            Войти в Аркадию
-          </span>
-          <span className="relative flex h-12 w-12 items-center justify-center border border-arkadia-ochre/40 group-hover:border-arkadia-ochre transition-all duration-500 rounded-full">
-            <motion.svg
-              viewBox="0 0 24 24"
-              className="h-4 w-4 text-arkadia-ochre"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              animate={{ y: [0, 4, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <path d="M12 4 L12 20 M6 14 L12 20 L18 14" strokeLinecap="round" strokeLinejoin="round" />
-            </motion.svg>
-          </span>
-        </motion.button>
-      </motion.div>
-
-      {/* Тонкий индикатор скролла — вертикальная линия справа */}
-      <motion.div
-        initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, delay: 2.5, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute right-5 md:right-10 top-1/2 -translate-y-1/2 origin-top h-32 w-px bg-gradient-to-b from-arkadia-ochre/0 via-arkadia-ochre/40 to-arkadia-ochre/0 hidden md:block"
+    <section className="relative min-h-[100svh] w-full overflow-hidden bg-arkadia-cream pt-20 md:pt-24">
+      {/* Декоративный фоновый паттерн */}
+      <div
+        className="absolute inset-0 opacity-[0.4] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(30, 58, 95, 0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 100% 100%, rgba(184, 148, 95, 0.05) 0%, transparent 60%)",
+        }}
       />
+
+      <div className="relative mx-auto max-w-7xl px-4 md:px-8">
+        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center min-h-[calc(100svh-6rem)] py-10">
+          {/* Левая колонка — текст */}
+          <div className="order-2 lg:order-1">
+            {/* Рейтинг сверху */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-arkadia-paper border border-arkadia-navy/10 shadow-soft mb-7"
+            >
+              <div className="flex items-center gap-0.5">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star
+                    key={s}
+                    className="h-3.5 w-3.5 fill-arkadia-gold text-arkadia-gold"
+                  />
+                ))}
+              </div>
+              <span className="font-body text-xs text-arkadia-graphite">
+                <strong className="font-semibold">{clinicStats.rating}</strong> · {clinicStats.reviewsCount} отзывов на 2ГИС
+              </span>
+            </motion.div>
+
+            {/* Маленькая метка */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex items-center gap-3 mb-5"
+            >
+              <span className="h-px w-8 bg-arkadia-navy/40" />
+              <span className="font-body text-xs uppercase tracking-[0.25em] text-arkadia-navy font-medium">
+                стоматологическая клиника
+              </span>
+            </motion.div>
+
+            {/* Главное название */}
+            <h1 className="font-display font-bold text-arkadia-graphite text-[18vw] leading-[0.95] sm:text-[14vw] md:text-[12vw] lg:text-[9vw] tracking-tight">
+              {title.split("").map((letter, i) => (
+                <span
+                  key={i}
+                  className="animate-letter-soft inline-block"
+                  style={{ animationDelay: `${0.3 + i * 0.06}s` }}
+                >
+                  {letter}
+                </span>
+              ))}
+            </h1>
+
+            {/* Подзаголовок */}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mt-5 font-body text-lg md:text-xl text-arkadia-slate leading-relaxed max-w-xl text-pretty"
+            >
+              Семь филиалов в Санкт-Петербурге · с 1989 года ·
+              для всей семьи — от детской стоматологии до имплантации.
+            </motion.p>
+
+            {/* Кнопки */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+            >
+              <button
+                onClick={scrollToNext}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-arkadia-navy hover:bg-arkadia-navy-dark text-arkadia-paper font-body text-sm font-medium transition-colors duration-200"
+              >
+                Записаться на приём
+              </button>
+              <a
+                href={`tel:${clinicStats.mainPhone.replace(/[^\d+]/g, "")}`}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-arkadia-paper hover:bg-arkadia-bone text-arkadia-graphite border border-arkadia-navy/15 font-body text-sm font-medium transition-colors duration-200"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                {clinicStats.mainPhone}
+              </a>
+            </motion.div>
+
+            {/* Маленькая статистика снизу */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+              className="mt-10 flex items-center gap-6 md:gap-8 text-arkadia-slate"
+            >
+              <div>
+                <p className="font-display text-2xl font-semibold text-arkadia-graphite">
+                  {clinicStats.yearsActive}
+                </p>
+                <p className="font-body text-xs mt-0.5">лет клинике</p>
+              </div>
+              <div className="h-8 w-px bg-arkadia-navy/15" />
+              <div>
+                <p className="font-display text-2xl font-semibold text-arkadia-graphite">
+                  {clinicStats.branchesCount}
+                </p>
+                <p className="font-body text-xs mt-0.5">филиалов</p>
+              </div>
+              <div className="h-8 w-px bg-arkadia-navy/15" />
+              <div>
+                <p className="font-display text-2xl font-semibold text-arkadia-graphite">
+                  {clinicStats.reviewsCount}
+                </p>
+                <p className="font-body text-xs mt-0.5">отзывов</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Правая колонка — фото */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="order-1 lg:order-2 relative"
+          >
+            <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-2xl lg:rounded-3xl overflow-hidden shadow-soft-lg">
+              <img
+                src="/arkadia/real/nevsky_c7a08508.jpg"
+                alt="Интерьер клиники «Аркадия» на Невском проспекте"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-arkadia-navy/30 via-transparent to-transparent" />
+
+              {/* Плавающая плашка с адресом */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.1 }}
+                className="absolute bottom-4 left-4 right-4 sm:left-5 sm:right-5 sm:bottom-5 bg-arkadia-paper/95 backdrop-blur-sm rounded-xl p-4 shadow-soft-md"
+              >
+                <p className="font-body text-[10px] uppercase tracking-wider text-arkadia-navy font-medium">
+                  главный филиал
+                </p>
+                <p className="font-display text-base font-semibold text-arkadia-graphite mt-1">
+                  Невский пр., 22
+                </p>
+                <p className="font-body text-xs text-arkadia-slate mt-0.5">
+                  м. Невский проспект · 3 этаж
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Индикатор скролла */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.4 }}
+          onClick={scrollToNext}
+          className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 text-arkadia-slate hover:text-arkadia-navy transition-colors"
+          aria-label="Листать вниз"
+        >
+          <span className="font-body text-[10px] uppercase tracking-[0.2em]">
+            листайте
+          </span>
+          <motion.span
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <ChevronDown className="h-4 w-4" />
+          </motion.span>
+        </motion.button>
+      </div>
     </section>
   );
 }

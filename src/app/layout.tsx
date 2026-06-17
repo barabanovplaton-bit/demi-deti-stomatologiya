@@ -1,41 +1,36 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin", "cyrillic"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: "Аркадия — стоматологическая клиника · Санкт-Петербург · с 1989",
   description:
-    "Аркадия — страна счастливых людей. Стоматологическая клиника в Санкт-Петербурге с 1989 года. Шесть филиалов в историческом центре города.",
+    "Стоматологическая клиника «Аркадия» в Санкт-Петербурге с 1989 года. 7 филиалов, рейтинг 4.9 на основе 216 отзывов 2ГИС. Имплантация, ортодонтия, детская стоматология.",
   keywords: [
     "Аркадия",
     "стоматология Санкт-Петербург",
     "стоматологическая клиника",
     "имплантация",
-    "лечебный центр",
+    "ортодонтия",
+    "детская стоматология",
     "Невский",
     "Васильевский",
+    "2ГИС 4.9",
   ],
   authors: [{ name: "Клиника «Аркадия»" }],
   openGraph: {
-    title: "Аркадия — страна счастливых людей",
+    title: "Аркадия — стоматологическая клиника в Петербурге с 1989 года",
     description:
-      "Стоматологическая клиника в Санкт-Петербурге. С 1989 года. Шесть филиалов.",
+      "7 филиалов · рейтинг 4.9 · 216 отзывов на 2ГИС. Стоматология для всей семьи с 1989 года.",
     siteName: "Аркадия",
     type: "website",
   },
@@ -49,19 +44,20 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${inter.variable} antialiased bg-arkadia-ink text-arkadia-ivory`}
+        className={`${manrope.variable} antialiased bg-arkadia-cream text-arkadia-graphite`}
       >
         {children}
         <Toaster />
         <SonnerToaster
           position="top-center"
-          theme="dark"
+          theme="light"
           toastOptions={{
             style: {
-              background: "#1a1a18",
-              color: "#f5f0e6",
-              border: "1px solid rgba(201, 169, 97, 0.3)",
-              fontFamily: "var(--font-inter)",
+              background: "#FFFFFF",
+              color: "#1F2937",
+              border: "1px solid #1E3A5F",
+              borderRadius: "12px",
+              fontFamily: "var(--font-manrope)",
             },
           }}
         />
