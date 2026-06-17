@@ -17,40 +17,33 @@ export const clinicStats = {
   reviewsCount: "216",
   photosCount: "79",
   foundedYear: 1989,
-  branchesCount: 7,
+  branchesCount: 6,
   yearsActive: new Date().getFullYear() - 1989,
   mainPhone: "8 (812) 603-40-50",
   website: "aklinika.ru",
 };
 
-// 7 филиалов по данным 2ГИС (включая седьмой на Невском 4 этаж)
+// 6 филиалов по данным 2ГИС (Невский — один филиал на 2 этажа)
 export const branches: Branch[] = [
   {
-    id: "nevsky-main",
-    name: "На Невском · главный",
-    address: "Невский пр., 22, 3 этаж",
+    id: "nevsky",
+    name: "На Невском",
+    address: "Невский пр., 22 · 3 и 4 этаж",
     phone: "8 (812) 315-34-86",
     hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
     photo: "/arkadia/real/nevsky_c7a08508.jpg",
     metro: "Невский проспект",
-  },
-  {
-    id: "nevsky-vip",
-    name: "На Невском · VIP",
-    address: "Невский пр., 22, 4 этаж",
-    phone: "8 (812) 315-25-68",
-    hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
-    photo: "/arkadia/real/nevsky_010d7df1.jpg",
-    metro: "Невский проспект",
+    district: "Центральный",
   },
   {
     id: "zagorodny",
     name: "На Загородном",
-    address: "Загородный пр., 21–23, 1 этаж",
+    address: "Загородный пр., 21–23 · 1 этаж",
     phone: "8 (812) 713-21-43",
     hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
     photo: "/arkadia/real/zagorodny_05739ec7.jpg",
     metro: "Владимирская",
+    district: "Центральный",
   },
   {
     id: "lomonosova",
@@ -60,15 +53,17 @@ export const branches: Branch[] = [
     hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
     photo: "/arkadia/real/lomonosova_829ac102.jpg",
     metro: "Достоевская",
+    district: "Центральный",
   },
   {
     id: "vasilievsky",
     name: "На Васильевском",
-    address: "В.О., ул. Нахимова, 11, 2 этаж",
+    address: "В.О., ул. Нахимова, 11 · 2 этаж",
     phone: "+7 (921) 778-62-61",
     hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
     photo: "/arkadia/real/vasilievsky_c26fe7b4.jpg",
     metro: "Приморская",
+    district: "Василеостровский",
   },
   {
     id: "shuvalovsky",
@@ -78,15 +73,17 @@ export const branches: Branch[] = [
     hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
     photo: "/arkadia/real/shuvalovsky_82f741b3.jpg",
     metro: "Комендантский проспект",
+    district: "Приморский",
   },
   {
     id: "rybatsky",
     name: "В Рыбацком",
-    address: "Шлиссельбургский пр., 1, 1 этаж",
+    address: "Шлиссельбургский пр., 1 · 1 этаж",
     phone: "8 (812) 707-45-32",
     hours: "Пн–Сб 10:00–20:00 · Вс 10:00–19:00",
     photo: "/arkadia/real/rybatsky_c831515e.jpg",
     metro: "Рыбацкое",
+    district: "Фрунзенский",
   },
 ];
 

@@ -8,6 +8,7 @@ import { clinicStats } from "./clinic-data";
 
 const navItems = [
   { id: "about", label: "О клинике", scrollTo: true },
+  { id: "history", label: "История", scrollTo: true },
   { id: "branches", label: "Филиалы", scrollTo: true },
   { id: "services", label: "Услуги", scrollTo: false },
   { id: "doctors", label: "Врачи", scrollTo: false },
@@ -17,13 +18,34 @@ const navItems = [
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const { open } = useComingSoon();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 100);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Подсветка активной секции
+  useEffect(() => {
+    const sections = ["about", "history", "branches", "services", "doctors", "reviews"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -40% 0px" }
+    );
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   // Блокируем скролл body когда открыто мобильное меню
@@ -61,105 +83,116 @@ export function Navigation() {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -30, opacity: 0 }}
+      {/* Плавающее меню-таблетка — десктоп */}
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-arkadia-cream/90 backdrop-blur-md border-b border-arkadia-navy/8 py-2.5"
-            : "bg-transparent py-4"
+        transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center transition-all duration-500 ${
+          scrolled ? "scale-95" : "scale-100"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 md:px-8">
+        <div className="flex items-center gap-1 px-2 py-2 rounded-[14px] bg-white/85 backdrop-blur-xl border border-arkadia-graphite/10 shadow-soft">
           {/* Логотип */}
           <button
             onClick={scrollToTop}
-            className="group flex items-center gap-2.5"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-[10px] hover:bg-arkadia-mist transition-colors"
             aria-label="Аркадия — на главную"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-arkadia-navy text-arkadia-paper font-display text-lg font-semibold group-hover:bg-arkadia-navy-dark transition-colors duration-200">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-arkadia-blue text-white font-display text-sm font-bold">
               А
             </span>
-            <div className="flex flex-col leading-none">
-              <span className="font-display text-base font-semibold tracking-tight text-arkadia-graphite">
-                Аркадия
-              </span>
-              <span className="font-body text-[10px] text-arkadia-slate mt-0.5">
-                стоматология · с 1989
-              </span>
-            </div>
+            <span className="font-display text-sm font-semibold tracking-tight text-arkadia-graphite">
+              Аркадия
+            </span>
           </button>
 
-          {/* Десктоп-навигация */}
-          <nav className="hidden md:flex items-center gap-7">
+          <div className="w-px h-6 bg-arkadia-graphite/10 mx-1" />
+
+          {/* Пункты меню */}
+          <nav className="flex items-center gap-0.5">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item)}
-                className="ink-underline font-body text-sm text-arkadia-graphite/85 hover:text-arkadia-navy transition-colors duration-200"
+                className={`px-3.5 py-1.5 rounded-[10px] font-body text-[13px] font-medium transition-all duration-200 ${
+                  activeSection === item.id
+                    ? "bg-arkadia-blue text-white"
+                    : "text-arkadia-graphite/80 hover:bg-arkadia-mist hover:text-arkadia-blue"
+                }`}
               >
                 {item.label}
               </button>
             ))}
           </nav>
 
-          {/* Правая часть — телефон и кнопка */}
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href={`tel:${clinicStats.mainPhone.replace(/[^\d+]/g, "")}`}
-              className="flex items-center gap-2 font-body text-sm font-medium text-arkadia-graphite hover:text-arkadia-navy transition-colors duration-200"
-            >
-              <Phone className="h-3.5 w-3.5" />
-              {clinicStats.mainPhone}
-            </a>
-            <button
-              onClick={handleAppointment}
-              className="font-body text-sm font-medium text-arkadia-paper bg-arkadia-navy hover:bg-arkadia-navy-dark transition-colors duration-200 px-5 py-2.5 rounded-xl"
-            >
-              Записаться
-            </button>
-          </div>
+          <div className="w-px h-6 bg-arkadia-graphite/10 mx-1" />
 
-          {/* Мобильное меню — кнопка */}
+          {/* Кнопка записи */}
           <button
-            onClick={() => setMobileOpen(true)}
-            className="md:hidden flex items-center justify-center h-10 w-10 rounded-xl bg-arkadia-navy/8 text-arkadia-navy"
-            aria-label="Открыть меню"
+            onClick={handleAppointment}
+            className="px-4 py-1.5 rounded-[10px] font-body text-[13px] font-medium text-white bg-arkadia-blue hover:bg-arkadia-blue-soft transition-colors animate-pulse-scale"
           >
-            <Menu className="h-5 w-5" />
+            Записаться
           </button>
         </div>
-      </motion.header>
+      </motion.div>
 
-      {/* Мобильное меню */}
+      {/* Мобильная таблетка — упрощённая */}
+      <motion.div
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="fixed top-3 left-3 right-3 z-50 md:hidden flex items-center justify-between px-4 py-2.5 rounded-[14px] bg-white/85 backdrop-blur-xl border border-arkadia-graphite/10 shadow-soft"
+      >
+        <button
+          onClick={scrollToTop}
+          className="flex items-center gap-2"
+          aria-label="Аркадия — на главную"
+        >
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-arkadia-blue text-white font-display text-sm font-bold">
+            А
+          </span>
+          <span className="font-display text-sm font-semibold tracking-tight text-arkadia-graphite">
+            Аркадия
+          </span>
+        </button>
+
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="flex items-center justify-center h-9 w-9 rounded-lg bg-arkadia-blue/10 text-arkadia-blue"
+          aria-label="Открыть меню"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </motion.div>
+
+      {/* Мобильное меню — полноэкранное */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] md:hidden bg-arkadia-cream"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[60] md:hidden bg-arkadia-mist"
           >
             {/* Шапка */}
-            <div className="flex items-center justify-between px-4 py-4 border-b border-arkadia-navy/10">
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-arkadia-navy text-arkadia-paper font-display text-lg font-semibold">
+            <div className="flex items-center justify-between px-4 py-3">
+              <button
+                onClick={scrollToTop}
+                className="flex items-center gap-2"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-arkadia-blue text-white font-display text-sm font-bold">
                   А
                 </span>
-                <div className="flex flex-col leading-none">
-                  <span className="font-display text-base font-semibold text-arkadia-graphite">
-                    Аркадия
-                  </span>
-                  <span className="font-body text-[10px] text-arkadia-slate mt-0.5">
-                    стоматология · с 1989
-                  </span>
-                </div>
-              </div>
+                <span className="font-display text-sm font-semibold text-arkadia-graphite">
+                  Аркадия
+                </span>
+              </button>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center h-10 w-10 rounded-xl bg-arkadia-navy/8 text-arkadia-navy"
+                className="flex items-center justify-center h-9 w-9 rounded-lg bg-arkadia-blue/10 text-arkadia-blue"
                 aria-label="Закрыть меню"
               >
                 <X className="h-5 w-5" />
@@ -167,15 +200,15 @@ export function Navigation() {
             </div>
 
             {/* Навигация */}
-            <nav className="flex flex-col px-4 py-6 gap-1 overflow-y-auto h-[calc(100vh-80px)]">
+            <nav className="flex flex-col px-4 py-6 gap-1 overflow-y-auto h-[calc(100vh-64px)]">
               {navItems.map((item, i) => (
                 <motion.button
                   key={item.id}
-                  initial={{ opacity: 0, x: -16 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 + i * 0.06, duration: 0.4 }}
+                  transition={{ delay: 0.08 + i * 0.07, duration: 0.4 }}
                   onClick={() => handleNavClick(item)}
-                  className="text-left font-display text-2xl font-medium text-arkadia-graphite py-3.5 border-b border-arkadia-navy/8"
+                  className="text-left font-display text-2xl font-semibold text-arkadia-graphite py-3 border-b border-arkadia-graphite/8"
                 >
                   {item.label}
                 </motion.button>
@@ -184,22 +217,22 @@ export function Navigation() {
               {/* Телефон */}
               <motion.a
                 href={`tel:${clinicStats.mainPhone.replace(/[^\d+]/g, "")}`}
-                initial={{ opacity: 0, x: -16 }}
+                initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 + navItems.length * 0.06, duration: 0.4 }}
-                className="flex items-center gap-2.5 mt-6 font-body text-base text-arkadia-navy"
+                transition={{ delay: 0.08 + navItems.length * 0.07, duration: 0.4 }}
+                className="flex items-center gap-2.5 mt-6 font-body text-base font-medium text-arkadia-blue"
               >
                 <Phone className="h-4 w-4" />
                 {clinicStats.mainPhone}
               </motion.a>
 
-              {/* Кнопка */}
+              {/* Кнопка записи */}
               <motion.button
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 + (navItems.length + 1) * 0.06, duration: 0.4 }}
+                transition={{ delay: 0.08 + (navItems.length + 1) * 0.07, duration: 0.4 }}
                 onClick={handleAppointment}
-                className="mt-5 font-body text-sm font-medium text-arkadia-paper bg-arkadia-navy py-4 rounded-xl"
+                className="mt-5 font-body text-sm font-medium text-white bg-arkadia-blue py-4 rounded-[14px]"
               >
                 Записаться на приём
               </motion.button>
@@ -208,10 +241,10 @@ export function Navigation() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.05 + (navItems.length + 2) * 0.06, duration: 0.4 }}
-                className="mt-6 flex items-center gap-3 px-4 py-3 rounded-xl bg-arkadia-mist/50"
+                transition={{ delay: 0.08 + (navItems.length + 2) * 0.07, duration: 0.4 }}
+                className="mt-6 flex items-center gap-3 px-4 py-3 rounded-[14px] bg-white border border-arkadia-graphite/8"
               >
-                <span className="font-display text-lg font-semibold text-arkadia-navy">
+                <span className="font-display text-lg font-bold text-arkadia-blue">
                   4.9
                 </span>
                 <div className="flex flex-col">
