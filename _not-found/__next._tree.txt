@@ -1,3 +1,0 @@
-:HL["/demi-deti-stomatologiya/_next/static/chunks/965832c2c14a59c2.css","style"]
-:HL["/demi-deti-stomatologiya/_next/static/chunks/ff9dce48e97e37f5.css","style"]
-0:{"buildId":"MPDajaGtaa-n_pZ7Embfk","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
