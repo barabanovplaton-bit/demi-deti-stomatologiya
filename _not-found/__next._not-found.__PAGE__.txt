@@ -3,7 +3,7 @@
 3:I[29306,["/demi-deti-stomatologiya/_next/static/chunks/ff1a16fafef87110.js","/demi-deti-stomatologiya/_next/static/chunks/a41406e4a54ef341.js","/demi-deti-stomatologiya/_next/static/chunks/b435968d8f2e9977.js","/demi-deti-stomatologiya/_next/static/chunks/d2be314c3ece3fbe.js","/demi-deti-stomatologiya/_next/static/chunks/cbcbe92df6dbab00.js"],"default"]
 6:I[97367,["/demi-deti-stomatologiya/_next/static/chunks/ff1a16fafef87110.js","/demi-deti-stomatologiya/_next/static/chunks/a41406e4a54ef341.js","/demi-deti-stomatologiya/_next/static/chunks/b435968d8f2e9977.js","/demi-deti-stomatologiya/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"buildId":"qjwUJCqq28NNko3ohE51j","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/demi-deti-stomatologiya/_next/static/chunks/cbcbe92df6dbab00.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"g-6uPC3aHAfBbwE_NWBnt","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/demi-deti-stomatologiya/_next/static/chunks/cbcbe92df6dbab00.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
