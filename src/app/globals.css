@@ -45,9 +45,9 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   /* Аркадия — основная палитра */
-  --color-arkadia-blue: #0D9488;            /* ультра-синий, основной акцент */
-  --color-arkadia-blue-deep: #134E4A;       /* глубокий тёмный для теней */
-  --color-arkadia-blue-soft: #14B8A6;       /* приглушённый синий */
+  --color-arkadia-blue: #7C3AED;            /* ультра-синий, основной акцент */
+  --color-arkadia-blue-deep: #4C1D95;       /* глубокий тёмный для теней */
+  --color-arkadia-blue-soft: #A78BFA;       /* приглушённый синий */
   --color-arkadia-mist: #EEF2FF;            /* молочно-голубой фон */
   --color-arkadia-sky: #DBEAFE;             /* светло-голубой плашки */
   --color-arkadia-paper: #FFFFFF;           /* чистый белый */
@@ -63,38 +63,38 @@
 :root {
   --radius: 0.875rem;
 
-  /* Светлая тема с синим #0D9488 акцентом */
+  /* Светлая тема с синим #7C3AED акцентом */
   --background: #EEF2FF;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --card-foreground: #0F172A;
   --popover: #FFFFFF;
   --popover-foreground: #0F172A;
-  --primary: #0D9488;
+  --primary: #7C3AED;
   --primary-foreground: #FFFFFF;
   --secondary: #DBEAFE;
   --secondary-foreground: #0F172A;
   --muted: #DBEAFE;
   --muted-foreground: #475569;
-  --accent: #0D9488;
+  --accent: #7C3AED;
   --accent-foreground: #FFFFFF;
   --destructive: #C2410C;
   --border: rgba(15, 23, 42, 0.10);
   --input: rgba(15, 23, 42, 0.10);
-  --ring: #0D9488;
-  --chart-1: #0D9488;
-  --chart-2: #14B8A6;
+  --ring: #7C3AED;
+  --chart-1: #7C3AED;
+  --chart-2: #A78BFA;
   --chart-3: #C2410C;
   --chart-4: #D4A537;
   --chart-5: #94A3B8;
   --sidebar: #FFFFFF;
   --sidebar-foreground: #0F172A;
-  --sidebar-primary: #0D9488;
+  --sidebar-primary: #7C3AED;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #DBEAFE;
   --sidebar-accent-foreground: #0F172A;
   --sidebar-border: rgba(15, 23, 42, 0.10);
-  --sidebar-ring: #0D9488;
+  --sidebar-ring: #7C3AED;
 }
 
 @layer base {
@@ -334,8 +334,8 @@
   /* Градиент синего для hero */
   .bg-hero-blue {
     background:
-      radial-gradient(ellipse 100% 80% at 50% 30%, #134E4A 0%, transparent 70%),
-      linear-gradient(180deg, #0D9488 0%, #14B8A6 70%, #0D9488 100%);
+      radial-gradient(ellipse 100% 80% at 50% 30%, #4C1D95 0%, transparent 70%),
+      linear-gradient(180deg, #7C3AED 0%, #A78BFA 70%, #7C3AED 100%);
   }
 
   /* Градиент для карточек */
@@ -343,6 +343,6 @@
     background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
   }
   .gradient-blue-soft {
-    background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
+    background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
   }
 }
